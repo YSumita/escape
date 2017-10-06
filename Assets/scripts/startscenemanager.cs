@@ -24,13 +24,11 @@ public class startscenemanager : MonoBehaviour {
 		push = true;
 
 		if (PlayerPrefs.HasKey ("playername")) {
-			startscenebuttons.SetActive(true);
 			nameenterbuttons.SetActive(false);
-			NameText.text = "Your name is " + PlayerPrefs.GetString ("playername");
+			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
 
 		}
 		else {
-			startscenebuttons.SetActive(false);
 			nameenterbuttons.SetActive(true);
 
 		}
@@ -95,7 +93,7 @@ public class startscenemanager : MonoBehaviour {
 			PlayerPrefs.SetString ("playername", inputfield.text);
 			startscenebuttons.SetActive(true);
 			nameenterbuttons.SetActive(false);
-			NameText.text = "Your name is " + PlayerPrefs.GetString ("playername");
+			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
 
 
 
@@ -104,6 +102,10 @@ public class startscenemanager : MonoBehaviour {
 		else {
 		}
 
+	}
+
+	public void namereset(){
+		nameenterbuttons.SetActive(true);
 	}
 
 }
