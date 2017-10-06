@@ -11,17 +11,6 @@ public class ballcontroller : MonoBehaviour {
 		speed = 4.0f;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
 	
 	// Update is called once per frame
 	void Update () {
