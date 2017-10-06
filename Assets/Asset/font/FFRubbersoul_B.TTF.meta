@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 540b6ef846211b048bb8d167c484802a
+timeCreated: 1505554030
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FF RubberSoul Bold
+  fontNames:
+  - FF RubberSoul Bold
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

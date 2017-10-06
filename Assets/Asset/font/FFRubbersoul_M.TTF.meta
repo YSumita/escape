@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: df58a27d878b84b49a921040fa1d57e8
+timeCreated: 1505554058
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FF RubberSoul Medium
+  fontNames:
+  - FF RubberSoul Medium
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

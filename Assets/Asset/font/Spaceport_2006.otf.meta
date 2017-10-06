@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: bafe9cce9d0d253468bbbc559be711c9
+timeCreated: 1505971119
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Spaceport 2006
+  fontNames:
+  - Spaceport 2006
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
