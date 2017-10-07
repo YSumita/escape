@@ -34,7 +34,6 @@ public class opponentmover : MonoBehaviour {
 		ballsprawn = 0.005f;
 		usual = true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
-		beameffect = true;
 
 	}
 	

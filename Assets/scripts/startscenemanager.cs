@@ -8,9 +8,6 @@ using NCMB;
 public class startscenemanager : MonoBehaviour {
 
 	public GameObject buttonsound;
-	float timer;
-	int mover;
-	bool push;
 
 	public GameObject startscenebuttons;
 	public GameObject nameenterbuttons;
@@ -19,9 +16,6 @@ public class startscenemanager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		timer = -1f;
-		mover = 0;
-		push = true;
 
 		if (PlayerPrefs.HasKey ("playername")) {
 			nameenterbuttons.SetActive(false);
@@ -36,55 +30,21 @@ public class startscenemanager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
-
-//		if(Input.GetKeyDown("space")){
-//			SceneManager.LoadScene ("Main");
-//		}
-
-		if (timer >= 0) {
-			timer += Time.deltaTime;
-		}
-
-		if (timer >= 0.3) {
-			if(mover==2)
-			SceneManager.LoadScene ("RuleScene1");
-		}
-
-		if (timer >= 1) {
-			if (mover == 1) {
-				SceneManager.LoadScene ("StageScene");
-			}
-			else if (mover == 3) {
-				SceneManager.LoadScene ("RankScene");
-			}
-		}
 	}
 
 	public void playbutton(){
-		if (push) {
-			mover = 1;
-			timer = 0f;
-			push = false;
 			Instantiate (buttonsound);
-		}
+			StartCoroutine ("play");
 	}
 
 	public void rulebutton(){
-		if (push) {
-			mover = 2;
-			timer = 0f;
 			Instantiate (buttonsound);
-		}
+			StartCoroutine ("rule");
 	}
 
 	public void rankbutton(){
-		if (push) {
-			mover = 3;
-			timer = 0f;
 			Instantiate (buttonsound);
-		}
+			StartCoroutine ("rank");
 	}
 
 	public void nameenterclick(){
@@ -110,4 +70,17 @@ public class startscenemanager : MonoBehaviour {
 		nameenterbuttons.SetActive(true);
 	}
 
+	IEnumerator play(){
+		yield return new WaitForSeconds (0.3f);
+		SceneManager.LoadScene ("StageScene");
+	}
+	IEnumerator rank(){
+		yield return new WaitForSeconds (0.3f);
+		SceneManager.LoadScene ("RankScene");
+	}
+	IEnumerator rule(){
+		yield return new WaitForSeconds (0.3f);
+		SceneManager.LoadScene ("RuleScene1");
+
+	}
 }
