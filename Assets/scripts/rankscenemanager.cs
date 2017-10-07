@@ -8,11 +8,7 @@ using NCMB;
 public class rankscenemanager : MonoBehaviour {
 
 	public GameObject buttonsound;
-	float timer;
-	int mover;
-	bool push;
 	bool getrank = false;
-	float gosa;
 	GameObject rankpref;
 
 
@@ -20,9 +16,6 @@ public class rankscenemanager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		timer = -1f;
-		mover = 0;
-		push = true;
 		fetchTopRankers ();
 	
 	
@@ -33,34 +26,16 @@ public class rankscenemanager : MonoBehaviour {
 
 		if (getrank) {
 			for (int i = 0; i < topRankersList.Count; i++) {
-				rankpref = GameObject.Find ("Rank (" + (i+1) + ")");
+				rankpref = GameObject.Find ("Rank (" + (i + 1) + ")");
 				rankpref.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList [i].name;
 				rankpref.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList [i].highscore.ToString ();
 			}
 			getrank = false;
 		}
-
-
-
-
-		if (timer >= 0) {
-			timer += Time.deltaTime;
-		}
-
-		if (timer >= 0.3) {
-			if (mover == 1) {
-				SceneManager.LoadScene ("StartScene");
-			}
-		}
 	}
-
 	public void homebutton(){
-		if (push) {
-			mover = 1;
-			timer = 0f;
-			Instantiate (buttonsound);
-			push = false;
-		}
+		Instantiate (buttonsound);
+		StartCoroutine ("home");
 	}
 
 	// サーバーからトップ5を取得 ---------------    
@@ -89,6 +64,11 @@ public class rankscenemanager : MonoBehaviour {
 
 
 		});
+	}
+
+	IEnumerator home(){
+		yield return new WaitForSeconds (0.3f);
+		SceneManager.LoadScene ("StartScene");
 	}
 
 }
