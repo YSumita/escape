@@ -39,9 +39,9 @@ public class startscenemanager : MonoBehaviour {
 
 
 
-		if(Input.GetKeyDown("space")){
-			SceneManager.LoadScene ("Main");
-		}
+//		if(Input.GetKeyDown("space")){
+//			SceneManager.LoadScene ("Main");
+//		}
 
 		if (timer >= 0) {
 			timer += Time.deltaTime;
@@ -54,7 +54,7 @@ public class startscenemanager : MonoBehaviour {
 
 		if (timer >= 1) {
 			if (mover == 1) {
-				SceneManager.LoadScene ("Main");
+				SceneManager.LoadScene ("StageScene");
 			}
 			else if (mover == 3) {
 				SceneManager.LoadScene ("RankScene");
@@ -62,7 +62,7 @@ public class startscenemanager : MonoBehaviour {
 		}
 	}
 
-	public void startbutton(){
+	public void playbutton(){
 		if (push) {
 			mover = 1;
 			timer = 0f;
@@ -93,6 +93,7 @@ public class startscenemanager : MonoBehaviour {
 			PlayerPrefs.SetString ("playername", inputfield.text);
 			startscenebuttons.SetActive(true);
 			nameenterbuttons.SetActive(false);
+			Instantiate (buttonsound);
 			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
 
 
@@ -105,6 +106,7 @@ public class startscenemanager : MonoBehaviour {
 	}
 
 	public void namereset(){
+		Instantiate (buttonsound);
 		nameenterbuttons.SetActive(true);
 	}
 
