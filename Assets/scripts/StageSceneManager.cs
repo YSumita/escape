@@ -2,13 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StageSceneManager : MonoBehaviour {
 
 	public GameObject buttonsound;
+	public Text hardstagelock;
+	public GameObject hardstage;
+	public GameObject hardstagefake;
+
 	// Use this for initialization
 	void Start () {
-		
+
+		if (PlayerPrefs.GetFloat ("highscore") < 500){
+			hardstagelock.text = Mathf.RoundToInt(PlayerPrefs.GetFloat ("highscore")) + "/500";
+		}
+		else{
+		hardstage.SetActive(true);
+		hardstagefake.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
