@@ -13,13 +13,7 @@ public class cubefallingcontroller : MonoBehaviour {
 	GameObject[] fallinggrounds;
 	float ypos;
 	bool fallannounce;
-	bool fall3;
-	bool fall2;
-	bool fall1;
 	bool backannounce;
-	bool back3;
-	bool back2;
-	bool back1;
 	bool yadjust;
 
 	// Use this for initialization
@@ -27,52 +21,22 @@ public class cubefallingcontroller : MonoBehaviour {
 		timer = 0;
 		one = true;
 		fallannounce = true;
-		fall3 = true;
-		fall2 = true;
-		fall1 = true;
 		backannounce = true;
-		back3 = true;
-		back2 = true;
-		back1 = true;
 		yadjust = true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
 		}
 	// Update is called once per frame
 	void Update () {
+
 		if (fallannounce) {
 			if (timer >= 25) {
-				cubefallingannounce.text = "Red Blocks will Fall Down!";
+				StartCoroutine ("fallingannouncecoroutine");	
 				fallannounce = false;
-				audiosource.PlayOneShot (keihou);
-
-			} 
-		}
-
-		if (fall3) {
-			if (timer >= 27) {
-				cubefallingannounce.text = "3";
-				fall3 = false;
-			} 
-		}
-
-		if (fall2) {
-			if (timer >= 28) {
-				cubefallingannounce.text = "2";
-				fall2 = false;
-			} 
-		}
-
-		if (fall1) {
-			if (timer >= 29) {
-				cubefallingannounce.text = "1";
-				fall1 = false;
 			}
 		}
-	
 
 		if (timer >= 30 && timer < 45) {
 			if (one) {
-				cubefallingannounce.text = "";
 				fallinggrounds = GameObject.FindGameObjectsWithTag ("groundred");
 				foreach (GameObject obj in fallinggrounds) {
 					obj.tag = "groundfall";
@@ -84,47 +48,29 @@ public class cubefallingcontroller : MonoBehaviour {
 			foreach (GameObject obj in fallinggrounds) {
 				Vector3 pos = obj.transform.position;
 				pos.y = ypos;
-				obj.transform.position = pos;
+				obj.transform.position =pos;
 			}
 
 		}
 
-		if (timer >= 45 && timer <= 60) {
+		if (timer >= 45 && timer < 60) {
 			ypos=-Mathf.Pow (timer - 60,2)*3;
 			foreach (GameObject obj in fallinggrounds) {
 				Vector3 pos = obj.transform.position;
 				pos.y = ypos;
 				obj.transform.position = pos;
+				//最後のy=0調整が滑らかにならないため、戻ってくるタイミングは二乗で座標を取得する方式にした
 			}
-
+		//
 			if(backannounce){
 				if (timer >= 55) {
-					cubefallingannounce.text = "Red Blocks will Come Back!";
+				StartCoroutine ("backannouncecoroutine");
 					backannounce=false;
 				}
 			}
-
-			if(back3){
-				if (timer >= 57) {
-					cubefallingannounce.text = "3";
-					back3=false;
-				}
-			}
-
-			if(back2){
-				if (timer >= 58) {
-					cubefallingannounce.text = "2";
-					back2=false;
-				}
-			}
-
-			if(back1){
-				if (timer >= 59) {
-					cubefallingannounce.text = "1";
-				}
-			}
+		//
 		}
-
+	
 		if (yadjust) {
 			if (timer >= 60) {
 				foreach (GameObject obj in fallinggrounds) {
@@ -133,7 +79,6 @@ public class cubefallingcontroller : MonoBehaviour {
 					obj.transform.position = pos;
 					obj.tag = "groundred";
 				}
-				cubefallingannounce.text = "";
 				yadjust = false;
 			}
 		}
@@ -141,18 +86,37 @@ public class cubefallingcontroller : MonoBehaviour {
 		if (timer >= 80) {
 			one = true;
 			fallannounce = true;
-			fall3 = true;
-			fall2 = true;
-			fall1 = true;
 			backannounce = true;
-			back3 = true;
-			back2 = true;
-			back1 = true;
 			yadjust = true;
 			timer = 0;
 
 		}
 
 		timer += Time.deltaTime;
+	}
+
+	IEnumerator fallingannouncecoroutine(){
+		cubefallingannounce.text = "Red Blocks will Fall Down!";
+		audiosource.PlayOneShot (keihou);
+		yield return new WaitForSeconds (2);
+		cubefallingannounce.text = "3";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "2";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "1";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "";
+	}
+
+	IEnumerator backannouncecoroutine(){
+		cubefallingannounce.text = "Red Blocks will Come Back!";
+		yield return new WaitForSeconds (2);
+		cubefallingannounce.text = "3";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "2";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "1";
+		yield return new WaitForSeconds (1);
+		cubefallingannounce.text = "";
 	}
 }
