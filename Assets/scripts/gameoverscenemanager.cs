@@ -13,19 +13,21 @@ public class gameoverscenemanager : MonoBehaviour {
 	int mover;
 	float timer;
 	public GameObject buttonsound;
+	int stagenum;
 
 	// Use this for initialization
 	void Start () {
+		stagenum = PlayerPrefs.GetInt ("stagenum");
 		mover = 0;
 		timer = -1f;
 		push = true;
-		lastscore = PlayerPrefs.GetFloat ("score");
-		if (PlayerPrefs.HasKey ("highscore")) {
-			highscore = PlayerPrefs.GetFloat ("highscore");
+		lastscore = PlayerPrefs.GetFloat ("lastscore");
+		if (PlayerPrefs.HasKey ("highscore"+stagenum)) {
+			highscore = PlayerPrefs.GetFloat ("highscore"+stagenum);
 			if (highscore < lastscore) {
 				highscore = lastscore;
-				PlayerPrefs.SetFloat ("highscore", highscore);
-				HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"));
+				PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
+				HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
 				highScoreInstance.Save ();
 				//NCMBの自分の欄を取得して、
 
@@ -34,9 +36,8 @@ public class gameoverscenemanager : MonoBehaviour {
 		}
 		else {
 			highscore = lastscore;
-			PlayerPrefs.SetFloat ("highscore", highscore);
-			Debug.Log ("aaa");
-			HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"));
+			PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
+			HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
 			highScoreInstance.Save ();
 
 		}
@@ -46,10 +47,6 @@ public class gameoverscenemanager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown("space")){
-			SceneManager.LoadScene ("StartScene");
-		}
-
 		if (timer >= 0) {
 			timer += Time.deltaTime;
 		}

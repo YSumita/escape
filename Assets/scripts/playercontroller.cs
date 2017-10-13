@@ -18,6 +18,7 @@ public class playercontroller : MonoBehaviour
 	{
 		refobj = GameObject.Find ("gamemanager");
 		speed = 6.0f;
+		Debug.Log (PlayerPrefs.GetInt ("stagenum"));
 	}
 	
 	// Update is called once per frame
@@ -61,8 +62,7 @@ public class playercontroller : MonoBehaviour
 
 		}
 		if (this.transform.position.y < -5) {
-
-			PlayerPrefs.SetFloat ("score", refobj.GetComponent<scorecalculator> ().score);
+			PlayerPrefs.SetFloat ("lastscore", refobj.GetComponent<scorecalculator> ().score);
 			SceneManager.LoadScene ("GameOverScene");
 		}
 

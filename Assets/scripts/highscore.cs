@@ -7,12 +7,14 @@ public class HighScore
 {
 	public int highscore;
 	public string name;
+	public int stagenum;
 	public string ObjectId;
 	// コンストラクタ -----------------------------------
-	public HighScore (int _score, string _name)
+	public HighScore (int _score, string _name, int _stagenum)
 	{
 		highscore = _score;
 		name = _name;
+		stagenum = _stagenum;
 	}
 
 	// サーバーにハイスコアを保存 -------------------------
@@ -20,10 +22,9 @@ public class HighScore
 	{
 		NCMBObject obj = new NCMBObject ("HighScore");
 		obj.Add ("Name", name);
-		obj.Add ("Score", highscore);
+		obj.Add ("Score"+stagenum, highscore);
 
 		if (!PlayerPrefs.HasKey ("ObjectIdKey")) {
-			Debug.Log("abc");
 			obj.SaveAsync ((NCMBException e) => {      
 				if (e != null) {
 					//エラー処理

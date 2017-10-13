@@ -10,13 +10,15 @@ public class rankscenemanager : MonoBehaviour {
 	public GameObject buttonsound;
 	bool getrank = false;
 	GameObject rankpref;
+	int stagenum;
 
 
 	List<HighScore> topRankersList = new List<HighScore> ();
 
 	// Use this for initialization
 	void Start () {
-		fetchTopRankers ();
+		stagenum = PlayerPrefs.GetInt ("stage");
+		fetchTopRankers (stagenum);
 	
 	
 	}
@@ -39,11 +41,11 @@ public class rankscenemanager : MonoBehaviour {
 	}
 
 	// サーバーからトップ5を取得 ---------------    
-	public void fetchTopRankers()
+	public void fetchTopRankers(int stagenum)
 	{
 		// データストアの「HighScore」クラスから検索
 		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
-		query.OrderByDescending ("Score");
+		query.OrderByDescending ("Score"+stagenum);
 		query.Limit = 20;
 		query.FindAsync ((List<NCMBObject> objList ,NCMBException e) => {
 
@@ -54,9 +56,9 @@ public class rankscenemanager : MonoBehaviour {
 				List<HighScore> list = new List<HighScore>();
 				// 取得したレコードをHighScoreクラスとして保存
 				foreach (NCMBObject obj in objList) {
-					int    s = System.Convert.ToInt32(obj["Score"]);
+					int    s = System.Convert.ToInt32(obj["Score"+stagenum]);
 					string n = System.Convert.ToString(obj["Name"]);
-					list.Add( new HighScore( s, n ) );
+					list.Add( new HighScore( s, n ,stagenum) );
 				}
 				topRankersList = list;
 				getrank = true;
