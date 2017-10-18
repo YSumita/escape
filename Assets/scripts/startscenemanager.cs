@@ -18,10 +18,6 @@ public class startscenemanager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		if (GameObject.Find ("Audio(clone)") == null) {
-			Instantiate (BGMobj);
-		}
-
 		if (PlayerPrefs.HasKey ("playername")) {
 			nameenterbuttons.SetActive(false);
 			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");

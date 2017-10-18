@@ -63,18 +63,21 @@ public class StageSceneManager : MonoBehaviour {
 	IEnumerator stagenormal(){
 		PlayerPrefs.SetInt ("stagenum", 1);
 		yield return new WaitForSeconds (1f);
+		Destroy (GameObject.Find ("Audio"));
 		SceneManager.LoadScene ("Main");
 	}
 
 	IEnumerator stagehard(){
 		PlayerPrefs.SetInt ("stagenum", 2);
 		yield return new WaitForSeconds (1f);
+		Destroy (GameObject.Find ("Audio"));
 		SceneManager.LoadScene ("Main");
 	}
 
 	IEnumerator stagecrazy(){
 		PlayerPrefs.SetInt ("stagenum", 3);
 		yield return new WaitForSeconds (1f);
+		Destroy (GameObject.Find ("Audio"));
 		SceneManager.LoadScene ("Main");
 	}
 }
