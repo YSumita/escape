@@ -57,7 +57,7 @@ public class StageSceneManager : MonoBehaviour {
 
 	public void homebutton(){
 		Instantiate (buttonsound);
-		SceneManager.LoadScene ("StartScene");
+		StartCoroutine ("gohome");
 	}
 
 	IEnumerator stagenormal(){
@@ -79,5 +79,10 @@ public class StageSceneManager : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		Destroy (GameObject.Find ("Audio"));
 		SceneManager.LoadScene ("Main");
+	}
+
+	IEnumerator gohome(){
+		yield return new WaitForSeconds (0.3f);
+		SceneManager.LoadScene ("StartScene");
 	}
 }

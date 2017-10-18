@@ -12,17 +12,30 @@ public class itemfallingcontroller : MonoBehaviour {
 	Vector3 cubeposition;
 	Vector3 cuberotation;
 	float itemrate;
+	float itemkatamuki;
+
 	// Use this for initialization
 	void Start () {
-		itemrate = 0.003f;	
+		if (PlayerPrefs.GetInt ("stagenum") == 1) {
+			itemrate = 0.0015f;
+			itemkatamuki = 1 / 18000f;
+		}
+		else if (PlayerPrefs.GetInt ("stagenum") == 2) {
+			itemrate = 0.003f;
+			itemkatamuki = 1 / 9000f;
+		}
+		else if (PlayerPrefs.GetInt ("stagenum") == 3) {
+			itemrate = 0.025f;
+			itemkatamuki = 0;
+		}	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
 		if(itemrate<0.025){
-			itemrate += Time.deltaTime / 9000f;
+			itemrate += Time.deltaTime*itemkatamuki;
 		}
-
 		if (Random.Range(0.0f,1.0f)<itemrate) {
 			whitegrounds = GameObject.FindGameObjectsWithTag ("groundwhite");
 			whiteballnum = Random.Range (0, whitegrounds.Length);

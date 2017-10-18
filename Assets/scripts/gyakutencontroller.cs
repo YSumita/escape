@@ -14,6 +14,9 @@ public class gyakutencontroller : MonoBehaviour {
 	public AudioClip keihou;
 	// Use this for initialization
 	void Start () {
+		if (PlayerPrefs.GetInt ("stagenum") == 1) {
+			Destroy (this);
+		}
 		timer = 0;
 		boolannounce=true;
 		bool3=true;

@@ -16,7 +16,11 @@ public class opponentmover : MonoBehaviour {
 	public GameObject redball;
 	public GameObject purpleball;
 	float ballsprawn;
+	float ballkatamuki;
+	float ballmax;
+	float beamrate;
 	float time;
+	float timecycle;
 
 	bool usual;
 	float tame;
@@ -25,6 +29,7 @@ public class opponentmover : MonoBehaviour {
 	AudioSource audiosource;
 	public AudioClip beamsound;
 	bool beameffect;
+	bool beamexist;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +39,29 @@ public class opponentmover : MonoBehaviour {
 		ballsprawn = 0.005f;
 		usual = true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
+		if (PlayerPrefs.GetInt ("stagenum") == 1) {
+			ballsprawn = 0.005f;
+			ballkatamuki = 1 / 5000f;
+			ballmax = 0.06f;
+			beamexist = false;
+		}
+		else if (PlayerPrefs.GetInt ("stagenum") == 2) {
+			ballsprawn=0.005f;
+			ballkatamuki = 1 / 2500f;
+			ballmax = 0.06f;
+			beamexist = true;
+			beamrate = 0.0004f;
+			timecycle = 40f;
+		}
+		else if (PlayerPrefs.GetInt ("stagenum") == 3) {
+			ballsprawn=0.1f;
+			ballkatamuki = 1 / 5000f;
+			ballmax = 0.2f;
+			beamexist = true;
+			beameffect = true;
+			beamrate = 0.001f;
+			timecycle = 20f;
+		}
 
 	}
 	
@@ -58,28 +86,27 @@ public class opponentmover : MonoBehaviour {
 			this.transform.LookAt (player.transform.position - down);
 	
 			if (Random.Range (0.0f, 1.0f) < ballsprawn) {
-				if (time <= 40) {
+				if (time <= timecycle-10) {
 					Instantiate (redball, this.transform.position + this.transform.forward, this.transform.rotation);
 				} else {
 					Instantiate (purpleball, this.transform.position + this.transform.forward, this.transform.rotation);
 				}
 			}
-			if (ballsprawn < 0.055) {
-				ballsprawn += Time.deltaTime / 3000.0f;
+			if (ballsprawn < ballmax) {
+				ballsprawn += Time.deltaTime*ballkatamuki;
 			}
-			if (ballsprawn >= 0.055 && ballsprawn < 0.075) {
-				ballsprawn += Time.deltaTime / 6000.0f;
+			if (ballsprawn >= ballmax && ballsprawn < ballmax+0.02f) {
+				ballsprawn += Time.deltaTime*ballkatamuki*2;
 			}
 
 			time += Time.deltaTime;
-			if (time >= 50) {
+			if (time >= timecycle) {
 				time = 0;
 				beameffect = true;
 			}
 	
-//		if(Random.Range(0.0f,1.0f)<0.0001){
-			if (beameffect) {
-				if (Random.Range (0.0f, 1.0f) < ballsprawn * 0.03) {
+			if (beamexist&&beameffect) {
+				if (Random.Range (0.0f, 1.0f) < beamrate) {
 					StartCoroutine ("Beam");
 				}
 			}
