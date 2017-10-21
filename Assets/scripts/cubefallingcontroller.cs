@@ -15,15 +15,19 @@ public class cubefallingcontroller : MonoBehaviour {
 	bool fallannounce;
 	bool backannounce;
 	bool yadjust;
+	float texttimer;
+	Vector2 announcesize;
 
 	// Use this for initialization
 	void Start () {
 		timer = 0;
+		texttimer = 0;
 		one = true;
 		fallannounce = true;
 		backannounce = true;
 		yadjust = true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
+		announcesize = new Vector2 (1500, 300);
 		}
 	// Update is called once per frame
 	void Update () {
@@ -96,16 +100,47 @@ public class cubefallingcontroller : MonoBehaviour {
 	}
 
 	IEnumerator fallingannouncecoroutine(){
+		
 		cubefallingannounce.text = "Red Blocks will Fall Down!";
 		audiosource.PlayOneShot (keihou);
 		yield return new WaitForSeconds (2);
-		cubefallingannounce.text = "3";
-		yield return new WaitForSeconds (1);
-		cubefallingannounce.text = "2";
-		yield return new WaitForSeconds (1);
-		cubefallingannounce.text = "1";
-		yield return new WaitForSeconds (1);
+
+		for (int i = 3; i > 0; i--) {
+			cubefallingannounce.text = i.ToString();
+			texttimer = 1;
+			while (texttimer > 0) {
+				texttimer -= Time.deltaTime;
+				cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
+				yield return false;
+			}
+		}
+
+//		cubefallingannounce.text = "3";
+//		texttimer = 1;
+//		while (texttimer>0) {
+//			texttimer -= Time.deltaTime;
+//			cubefallingannounce.rectTransform.sizeDelta = texttimer*announcesize;
+//			yield return false;
+//		}
+//
+//		cubefallingannounce.text = "2";
+//		texttimer = 1;
+//		while (texttimer > 0) {
+//			texttimer -= Time.deltaTime;
+//			cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
+//			yield return false;
+//		}
+//
+//		cubefallingannounce.text = "1";
+//		texttimer = 1;
+//		while (texttimer>0) {
+//			texttimer -= Time.deltaTime;
+//			cubefallingannounce.rectTransform.sizeDelta = texttimer*announcesize;
+//			yield return false;
+//		}
+
 		cubefallingannounce.text = "";
+		cubefallingannounce.rectTransform.sizeDelta=announcesize;
 	}
 
 	IEnumerator backannouncecoroutine(){

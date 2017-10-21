@@ -80,4 +80,6 @@ public class gyakutencontroller : MonoBehaviour {
 
 		timer += Time.deltaTime;
 	}
+
+
 }
