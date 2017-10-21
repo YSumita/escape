@@ -30,10 +30,13 @@ public class rankscenemanager : MonoBehaviour {
 	public GameObject Rank2;
 	public GameObject Rank3;
 
+	public GameObject normalownrank;
+	public GameObject hardownrank;
+	public GameObject crazyownrank;
+
 	// Use this for initialization
 	void Start () {
 		fetchTopRankers ();
-
 	}
 	
 	// Update is called once per frame
@@ -67,9 +70,20 @@ public class rankscenemanager : MonoBehaviour {
 			getrank [0] = false;
 			getrank [1] = false;
 			getrank [2] = false;
+
 			Rank1.SetActive (true);
 			Rank2.SetActive (false);
 			Rank3.SetActive (false);
+			normalownrank.SetActive (true);
+			hardownrank.SetActive (false);
+			crazyownrank.SetActive (false);
+
+
+//			normalownrank.GetComponent<numberofplayers>().text = "/" + fetchnumofplayer (1);
+//			hardownrank.text = "/" + fetchnumofplayer (2);
+//			crazyownrank.text = "/" + fetchnumofplayer (2);
+
+
 
 		}
 	}
@@ -89,6 +103,9 @@ public class rankscenemanager : MonoBehaviour {
 		Rank1.SetActive (true);
 		Rank2.SetActive (false);
 		Rank3.SetActive (false);
+		normalownrank.SetActive (true);
+		hardownrank.SetActive (false);
+		crazyownrank.SetActive (false);
 
 	}
 
@@ -103,6 +120,9 @@ public class rankscenemanager : MonoBehaviour {
 		Rank1.SetActive (false);
 		Rank2.SetActive (true);
 		Rank3.SetActive (false);
+		normalownrank.SetActive (false);
+		hardownrank.SetActive (true);
+		crazyownrank.SetActive (false);
 	}
 
 	public void crazybutton(){
@@ -116,6 +136,9 @@ public class rankscenemanager : MonoBehaviour {
 		Rank1.SetActive (false);
 		Rank2.SetActive (false);
 		Rank3.SetActive (true);
+		normalownrank.SetActive (false);
+		hardownrank.SetActive (false);
+		crazyownrank.SetActive (true);
 	}
 
 
@@ -128,7 +151,6 @@ public class rankscenemanager : MonoBehaviour {
 	// サーバーからトップ5を取得 ---------------    
 	public void fetchTopRankers()
 	{
-		Debug.Log ("fetchTopRankers");
 		// データストアの「HighScore」クラスから検索
 		NCMBQuery<NCMBObject> query1 = new NCMBQuery<NCMBObject> ("HighScore");
 		query1.OrderByDescending ("Score1");
@@ -153,7 +175,6 @@ public class rankscenemanager : MonoBehaviour {
 
 
 		});
-		Debug.Log ("fetchTopRankers");
 		NCMBQuery<NCMBObject> query2 = new NCMBQuery<NCMBObject> ("HighScore");
 		query2.OrderByDescending ("Score2");
 		query2.Limit = 20;
@@ -176,7 +197,6 @@ public class rankscenemanager : MonoBehaviour {
 
 
 		});
-		Debug.Log ("fetchTopRankers");
 		NCMBQuery<NCMBObject> query3 = new NCMBQuery<NCMBObject> ("HighScore");
 		query3.OrderByDescending ("Score3");
 		query3.Limit = 20;
@@ -198,6 +218,20 @@ public class rankscenemanager : MonoBehaviour {
 			}
 
 
+		});
+
+	}
+
+	void fetchnumofplayer(int stage){
+		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
+		query.WhereNotEqualTo ("Score"+stage, null);
+		query.CountAsync ((int count ,NCMBException e) => {
+			if (e != null) {
+				//検索失敗時の処理
+			} 
+			else {
+				Debug.Log("件数："+count);
+			}
 		});
 
 	}
