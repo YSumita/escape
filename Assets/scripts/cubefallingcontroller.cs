@@ -17,6 +17,7 @@ public class cubefallingcontroller : MonoBehaviour {
 	bool yadjust;
 	float texttimer;
 	Vector2 announcesize;
+	Vector2 wordannouncesize;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +28,7 @@ public class cubefallingcontroller : MonoBehaviour {
 		backannounce = true;
 		yadjust = true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
-		announcesize = new Vector2 (1500, 300);
+		announcesize = new Vector2 (1500, 500);
 		}
 	// Update is called once per frame
 	void Update () {
@@ -103,21 +104,20 @@ public class cubefallingcontroller : MonoBehaviour {
 		
 		cubefallingannounce.text = "Red Blocks will Fall Down!";
 		audiosource.PlayOneShot (keihou);
-		texttimer = 2;
-		while (texttimer > 0) {
-			texttimer -= Time.deltaTime;
-			cubefallingannounce.color = new Color (255, 0, 0, Mathf.FloorToInt(75*Mathf.Sin(texttimer*90-90)+175));
+		texttimer = 0;
+		while (texttimer < 2) {
+			texttimer += Time.deltaTime;
+			cubefallingannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
 			yield return false;
 		}
 
-		cubefallingannounce.color = Color.red;
-
 		for (int i = 3; i > 0; i--) {
 			cubefallingannounce.text = i.ToString();
-			texttimer = 1;
-			while (texttimer > 0) {
-				texttimer -= Time.deltaTime;
-				cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
+			texttimer = 0;
+			while (texttimer < 1) {
+				texttimer += Time.deltaTime;
+				cubefallingannounce.rectTransform.sizeDelta = (1-texttimer) * announcesize;
+				cubefallingannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
 				yield return false;
 			}
 		}
@@ -128,14 +128,21 @@ public class cubefallingcontroller : MonoBehaviour {
 
 	IEnumerator backannouncecoroutine(){
 		cubefallingannounce.text = "Red Blocks will Come Back!";
-		yield return new WaitForSeconds (2);
+		audiosource.PlayOneShot (keihou);
+		texttimer = 0;
+		while (texttimer < 2) {
+			texttimer += Time.deltaTime;
+			cubefallingannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
+			yield return false;
+		}
 
 		for (int i = 3; i > 0; i--) {
 			cubefallingannounce.text = i.ToString();
-			texttimer = 1;
-			while (texttimer > 0) {
-				texttimer -= Time.deltaTime;
-				cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
+			texttimer = 0;
+			while (texttimer < 1) {
+				texttimer += Time.deltaTime;
+				cubefallingannounce.rectTransform.sizeDelta = (1-texttimer) * announcesize;
+				cubefallingannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
 				yield return false;
 			}
 		}

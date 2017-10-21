@@ -26,7 +26,7 @@ public class gyakutencontroller : MonoBehaviour {
 		bool1=true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
 		texttimer = 0;
-		announcesize = new Vector2 (1500, 300);
+		announcesize = new Vector2 (1500, 500);
 	}
 
 	// Update is called once per frame
@@ -87,30 +87,52 @@ public class gyakutencontroller : MonoBehaviour {
 	IEnumerator announce(){
 		gyakutenannounce.text = "Red and Green will exchange!";
 		audiosource.PlayOneShot (keihou);
-		texttimer = 2;
-		while (texttimer > 0) {
-			texttimer -= Time.deltaTime;
-			gyakutenannounce.color = new Color (255, 0, 0, Mathf.FloorToInt(75*Mathf.Sin(texttimer*90-90)+175));
+
+		texttimer = 0;
+		while (texttimer < 2) {
+			texttimer += Time.deltaTime;
+			gyakutenannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
 			yield return false;
 		}
 
-		gyakutenannounce.color = Color.red;
-
 		for (int i = 3; i > 0; i--) {
 			gyakutenannounce.text = i.ToString();
-			texttimer = 1;
-			while (texttimer > 0) {
-				texttimer -= Time.deltaTime;
-				gyakutenannounce.rectTransform.sizeDelta = texttimer * announcesize;
+			texttimer = 0;
+			while (texttimer < 1) {
+				texttimer += Time.deltaTime;
+				gyakutenannounce.rectTransform.sizeDelta = (1-texttimer) * announcesize;
+				gyakutenannounce.color = new Color (255, 0, 0, 0.3f*Mathf.Sin(Mathf.PI*(texttimer*2-0.25f))+0.7f);
 				yield return false;
 			}
 		}
 
 		gyakutenannounce.text = "";
 		gyakutenannounce.rectTransform.sizeDelta=announcesize;
-
-
 	}
+//		texttimer = 2;
+//		while (texttimer > 0) {
+//			texttimer -= Time.deltaTime;
+//			gyakutenannounce.color = new Color (255, 0, 0, Mathf.FloorToInt(75*Mathf.Sin(Mathf.PI*texttimer)+175));
+//			yield return false;
+//		}
+//
+//		gyakutenannounce.color = Color.red;
+//
+//		for (int i = 3; i > 0; i--) {
+//			gyakutenannounce.text = i.ToString();
+//			texttimer = 1;
+//			while (texttimer > 0) {
+//				texttimer -= Time.deltaTime;
+//				gyakutenannounce.rectTransform.sizeDelta = texttimer * announcesize;
+//				yield return false;
+//			}
+//		}
+//
+//		gyakutenannounce.text = "";
+//		gyakutenannounce.rectTransform.sizeDelta=announcesize;
+//
+//
+//	}
 
 
 }
