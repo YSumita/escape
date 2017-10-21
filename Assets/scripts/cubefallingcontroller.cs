@@ -103,6 +103,31 @@ public class cubefallingcontroller : MonoBehaviour {
 		
 		cubefallingannounce.text = "Red Blocks will Fall Down!";
 		audiosource.PlayOneShot (keihou);
+		texttimer = 2;
+		while (texttimer > 0) {
+			texttimer -= Time.deltaTime;
+			cubefallingannounce.color = new Color (255, 0, 0, Mathf.FloorToInt(75*Mathf.Sin(texttimer*90-90)+175));
+			yield return false;
+		}
+
+		cubefallingannounce.color = Color.red;
+
+		for (int i = 3; i > 0; i--) {
+			cubefallingannounce.text = i.ToString();
+			texttimer = 1;
+			while (texttimer > 0) {
+				texttimer -= Time.deltaTime;
+				cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
+				yield return false;
+			}
+		}
+			
+		cubefallingannounce.text = "";
+		cubefallingannounce.rectTransform.sizeDelta=announcesize;
+	}
+
+	IEnumerator backannouncecoroutine(){
+		cubefallingannounce.text = "Red Blocks will Come Back!";
 		yield return new WaitForSeconds (2);
 
 		for (int i = 3; i > 0; i--) {
@@ -114,44 +139,8 @@ public class cubefallingcontroller : MonoBehaviour {
 				yield return false;
 			}
 		}
-
-//		cubefallingannounce.text = "3";
-//		texttimer = 1;
-//		while (texttimer>0) {
-//			texttimer -= Time.deltaTime;
-//			cubefallingannounce.rectTransform.sizeDelta = texttimer*announcesize;
-//			yield return false;
-//		}
-//
-//		cubefallingannounce.text = "2";
-//		texttimer = 1;
-//		while (texttimer > 0) {
-//			texttimer -= Time.deltaTime;
-//			cubefallingannounce.rectTransform.sizeDelta = texttimer * announcesize;
-//			yield return false;
-//		}
-//
-//		cubefallingannounce.text = "1";
-//		texttimer = 1;
-//		while (texttimer>0) {
-//			texttimer -= Time.deltaTime;
-//			cubefallingannounce.rectTransform.sizeDelta = texttimer*announcesize;
-//			yield return false;
-//		}
-
 		cubefallingannounce.text = "";
 		cubefallingannounce.rectTransform.sizeDelta=announcesize;
-	}
 
-	IEnumerator backannouncecoroutine(){
-		cubefallingannounce.text = "Red Blocks will Come Back!";
-		yield return new WaitForSeconds (2);
-		cubefallingannounce.text = "3";
-		yield return new WaitForSeconds (1);
-		cubefallingannounce.text = "2";
-		yield return new WaitForSeconds (1);
-		cubefallingannounce.text = "1";
-		yield return new WaitForSeconds (1);
-		cubefallingannounce.text = "";
 	}
 }

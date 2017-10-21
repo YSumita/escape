@@ -12,6 +12,8 @@ public class gyakutencontroller : MonoBehaviour {
 	bool bool1;
 	AudioSource audiosource;
 	public AudioClip keihou;
+	float texttimer;
+	Vector2 announcesize;
 	// Use this for initialization
 	void Start () {
 		if (PlayerPrefs.GetInt ("stagenum") == 1) {
@@ -23,6 +25,8 @@ public class gyakutencontroller : MonoBehaviour {
 		bool2=true;
 		bool1=true;
 		audiosource = this.gameObject.GetComponent<AudioSource> ();
+		texttimer = 0;
+		announcesize = new Vector2 (1500, 300);
 	}
 
 	// Update is called once per frame
@@ -30,9 +34,8 @@ public class gyakutencontroller : MonoBehaviour {
 
 		if (boolannounce) {
 			if (timer >= 75) {
-				gyakutenannounce.text = "Red and Green will exchange!";
+				StartCoroutine ("announce");
 				boolannounce = false;
-				audiosource.PlayOneShot (keihou);
 			}
 		}
 
@@ -79,6 +82,34 @@ public class gyakutencontroller : MonoBehaviour {
 		}
 
 		timer += Time.deltaTime;
+	}
+
+	IEnumerator announce(){
+		gyakutenannounce.text = "Red and Green will exchange!";
+		audiosource.PlayOneShot (keihou);
+		texttimer = 2;
+		while (texttimer > 0) {
+			texttimer -= Time.deltaTime;
+			gyakutenannounce.color = new Color (255, 0, 0, Mathf.FloorToInt(75*Mathf.Sin(texttimer*90-90)+175));
+			yield return false;
+		}
+
+		gyakutenannounce.color = Color.red;
+
+		for (int i = 3; i > 0; i--) {
+			gyakutenannounce.text = i.ToString();
+			texttimer = 1;
+			while (texttimer > 0) {
+				texttimer -= Time.deltaTime;
+				gyakutenannounce.rectTransform.sizeDelta = texttimer * announcesize;
+				yield return false;
+			}
+		}
+
+		gyakutenannounce.text = "";
+		gyakutenannounce.rectTransform.sizeDelta=announcesize;
+
+
 	}
 
 
