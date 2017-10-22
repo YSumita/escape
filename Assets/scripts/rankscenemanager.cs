@@ -8,7 +8,7 @@ using NCMB;
 public class rankscenemanager : MonoBehaviour {
 
 	public GameObject buttonsound;
-	bool[] getrank = new bool[3];
+	bool[] getrank = new bool[6];
 
 	GameObject rankpref1;
 	GameObject rankpref2;
@@ -34,42 +34,51 @@ public class rankscenemanager : MonoBehaviour {
 	public GameObject hardownrank;
 	public GameObject crazyownrank;
 
+	int[] playernum;
+	int[] ownrank;
+
 	// Use this for initialization
 	void Start () {
+		ownrank = new int[3];
+		playernum = new int[3];
 		fetchTopRankers ();
+		fetchnumofplayer ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (getrank[0]&&getrank[1]&&getrank[2]) {
-			Debug.Log ("1:"+topRankersList1.Count);
-			Debug.Log ("2:"+topRankersList2.Count);
-			Debug.Log ("3:"+topRankersList3.Count);
+		if (getrank[0]&&getrank[1]&&getrank[2]&&getrank[3]&&getrank[4]&&getrank[5]) {
 
 			for (int i = 0; i < topRankersList1.Count; i++) {
 				rankpref1 = GameObject.Find ("Rank1/Viewport/Content/Rank (" + (i + 1) + ")");
-				Debug.Log (rankpref1);
 				rankpref1.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList1 [i].name;
 				rankpref1.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList1 [i].highscore.ToString ();
-				Debug.Log ("a" + i);
 			}
 			for (int i = 0; i < topRankersList2.Count; i++) {
 				rankpref2 = GameObject.Find ("Rank2/Viewport/Content/Rank (" + (i + 1) + ")");
-				Debug.Log (rankpref2);
 				rankpref2.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList2 [i].name;
 				rankpref2.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList2 [i].highscore.ToString ();
-				Debug.Log ("b" + i);
 			}
 			for (int i = 0; i < topRankersList3.Count; i++) {
 				rankpref3 = GameObject.Find ("Rank3/Viewport/Content/Rank (" + (i + 1) + ")");
 				rankpref3.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList3 [i].name;
 				rankpref3.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList3 [i].highscore.ToString ();
-				Debug.Log ("c" + i);
 			}
+
+			Debug.Log (playernum [0]);
+			Debug.Log (playernum [1]);
+			Debug.Log (playernum [2]);
+
+			for (int i = 1; i < 4; i++) {
+				GameObject.Find ("yourRank" + i + "/numberofplayers").GetComponent<Text>().text = "/" + playernum [i - 1];
+			}
+
 			getrank [0] = false;
 			getrank [1] = false;
 			getrank [2] = false;
+			getrank [3] = false;
 
 			Rank1.SetActive (true);
 			Rank2.SetActive (false);
@@ -222,19 +231,45 @@ public class rankscenemanager : MonoBehaviour {
 
 	}
 
-	void fetchnumofplayer(int stage){
-		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
-		query.WhereNotEqualTo ("Score"+stage, null);
-		query.CountAsync ((int count ,NCMBException e) => {
+	void fetchnumofplayer(){
+			
+			NCMBQuery<NCMBObject> query1 = new NCMBQuery<NCMBObject> ("HighScore");
+			query1.WhereNotEqualTo ("Score" + 1, null);
+			query1.CountAsync ((int count1, NCMBException e) => {
+				if (e != null) {
+					//検索失敗時の処理
+				} else {
+					playernum[0]=count1;
+					getrank[3]=true;
+				}
+			});
+
+		NCMBQuery<NCMBObject> query2 = new NCMBQuery<NCMBObject> ("HighScore");
+		query2.WhereNotEqualTo ("Score" + 2, null);
+		query2.CountAsync ((int count2, NCMBException e) => {
 			if (e != null) {
 				//検索失敗時の処理
-			} 
-			else {
-				Debug.Log("件数："+count);
+			} else {
+				playernum[1]=count2;
+				getrank[4]=true;
 			}
 		});
 
+		NCMBQuery<NCMBObject> query3 = new NCMBQuery<NCMBObject> ("HighScore");
+		query3.WhereNotEqualTo ("Score" + 3, null);
+		query3.CountAsync ((int count3, NCMBException e) => {
+			if (e != null) {
+				//検索失敗時の処理
+			} else {
+				playernum[2]=count3;
+				getrank[5]=true;
+			}
+		});
+
+		//for文でやろうとしたが、iの更新がcountの取得よりも早く、count取得時にはi=4でArrayエラーが起こるためfor文を分解した
 	}
+
+
 
 	IEnumerator home(){
 		yield return new WaitForSeconds (0.3f);
