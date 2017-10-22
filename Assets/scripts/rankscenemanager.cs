@@ -57,7 +57,6 @@ public class rankscenemanager : MonoBehaviour {
 	void Update () {
 		
 		if (getrank[0]&&getrank[1]&&getrank[2]&&getownrank[0]&&getownrank[1]&&getownrank[2]&&getplayernum[0]&&getplayernum[1]&&getplayernum[2]) {
-			Debug.Log ("aaa");
 			for (int i = 0; i < topRankersList1.Count; i++) {
 				rankpref1 = GameObject.Find ("Rank1/Viewport/Content/Rank (" + (i + 1) + ")");
 				rankpref1.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList1 [i].name;
@@ -95,14 +94,6 @@ public class rankscenemanager : MonoBehaviour {
 			normalownrank.SetActive (true);
 			hardownrank.SetActive (false);
 			crazyownrank.SetActive (false);
-
-
-//			normalownrank.GetComponent<numberofplayers>().text = "/" + fetchnumofplayer (1);
-//			hardownrank.text = "/" + fetchnumofplayer (2);
-//			crazyownrank.text = "/" + fetchnumofplayer (2);
-
-
-
 		}
 	}
 	public void homebutton(){
@@ -250,7 +241,6 @@ public class rankscenemanager : MonoBehaviour {
 					//検索失敗時の処理
 				} else {
 					ownrank [stagenum - 1] = count + 1;
-					Debug.Log (stagenum + " " + ownrank [stagenum - 1]);
 					getownrank [stagenum - 1] = true;
 				}
 			});
