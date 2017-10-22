@@ -44,6 +44,7 @@ public class opponentmover : MonoBehaviour {
 			ballkatamuki = 1 / 5000f;
 			ballmax = 0.06f;
 			beamexist = false;
+			timecycle = 40f;
 		}
 		else if (PlayerPrefs.GetInt ("stagenum") == 2) {
 			ballsprawn=0.005f;

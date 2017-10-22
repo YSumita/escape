@@ -17,8 +17,8 @@ public class StageSceneManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		if (PlayerPrefs.GetFloat ("highscore1") < 500){
-			hardstagelock.text = Mathf.RoundToInt(PlayerPrefs.GetFloat ("highscore1")) + "/500";
+		if (PlayerPrefs.GetFloat ("highscore1") < 300){
+			hardstagelock.text = Mathf.RoundToInt(PlayerPrefs.GetFloat ("highscore1")) + "/300";
 		}
 		else{
 		hardstage.SetActive(true);

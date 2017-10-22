@@ -8,7 +8,9 @@ using NCMB;
 public class rankscenemanager : MonoBehaviour {
 
 	public GameObject buttonsound;
-	bool[] getrank = new bool[6];
+	bool[] getrank = new bool[3];
+	bool[] getownrank = new bool[3];
+	bool[] getplayernum = new bool[3];
 
 	GameObject rankpref1;
 	GameObject rankpref2;
@@ -42,15 +44,20 @@ public class rankscenemanager : MonoBehaviour {
 		ownrank = new int[3];
 		playernum = new int[3];
 		fetchTopRankers ();
-		fetchnumofplayer ();
+		fetchownrank (1);
+		fetchownrank (2);
+		fetchownrank (3);
+		fetchplayernum (1);
+		fetchplayernum (2);
+		fetchplayernum (3);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (getrank[0]&&getrank[1]&&getrank[2]&&getrank[3]&&getrank[4]&&getrank[5]) {
-
+		
+		if (getrank[0]&&getrank[1]&&getrank[2]&&getownrank[0]&&getownrank[1]&&getownrank[2]&&getplayernum[0]&&getplayernum[1]&&getplayernum[2]) {
+			Debug.Log ("aaa");
 			for (int i = 0; i < topRankersList1.Count; i++) {
 				rankpref1 = GameObject.Find ("Rank1/Viewport/Content/Rank (" + (i + 1) + ")");
 				rankpref1.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList1 [i].name;
@@ -66,19 +73,28 @@ public class rankscenemanager : MonoBehaviour {
 				rankpref3.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList3 [i].name;
 				rankpref3.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList3 [i].highscore.ToString ();
 			}
-
-			Debug.Log (playernum [0]);
-			Debug.Log (playernum [1]);
-			Debug.Log (playernum [2]);
+//			Debug.Log ("Highscore1:" + PlayerPrefs.GetFloat ("Highscore1"));
+//			Debug.Log ("Highscore2:" + PlayerPrefs.GetFloat ("Highscore2"));
+//			Debug.Log ("Highscore3:" + PlayerPrefs.GetFloat ("Highscore3"));
+//
+//			Debug.Log (ownrank [0]);
+//			Debug.Log (ownrank [1]);
+//			Debug.Log (ownrank [2]);
 
 			for (int i = 1; i < 4; i++) {
 				GameObject.Find ("yourRank" + i + "/numberofplayers").GetComponent<Text>().text = "/" + playernum [i - 1];
+				if (ownrank [i - 1] != 0) {
+					GameObject.Find ("yourRank" + i + "/yourranknum").GetComponent<Text> ().text = (ownrank [i - 1]).ToString ();
+				} 
+				else {
+					GameObject.Find ("yourRank" + i + "/yourranknum").GetComponent<Text> ().text = "XXX";
+
+				}
 			}
 
 			getrank [0] = false;
 			getrank [1] = false;
 			getrank [2] = false;
-			getrank [3] = false;
 
 			Rank1.SetActive (true);
 			Rank2.SetActive (false);
@@ -231,45 +247,40 @@ public class rankscenemanager : MonoBehaviour {
 
 	}
 
-	void fetchnumofplayer(){
+	void fetchownrank(int stagenum){
 			
-			NCMBQuery<NCMBObject> query1 = new NCMBQuery<NCMBObject> ("HighScore");
-			query1.WhereNotEqualTo ("Score" + 1, null);
-			query1.CountAsync ((int count1, NCMBException e) => {
+		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
+		if (PlayerPrefs.HasKey ("highscore" + stagenum)) {
+			query.WhereGreaterThan ("Score" + stagenum, PlayerPrefs.GetFloat ("highscore" + stagenum));
+			query.CountAsync ((int count, NCMBException e) => {
 				if (e != null) {
 					//検索失敗時の処理
 				} else {
-					playernum[0]=count1;
-					getrank[3]=true;
+					ownrank [stagenum - 1] = count + 1;
+					Debug.Log (stagenum + " " + ownrank [stagenum - 1]);
+					getownrank [stagenum - 1] = true;
 				}
 			});
-
-		NCMBQuery<NCMBObject> query2 = new NCMBQuery<NCMBObject> ("HighScore");
-		query2.WhereNotEqualTo ("Score" + 2, null);
-		query2.CountAsync ((int count2, NCMBException e) => {
-			if (e != null) {
-				//検索失敗時の処理
-			} else {
-				playernum[1]=count2;
-				getrank[4]=true;
-			}
-		});
-
-		NCMBQuery<NCMBObject> query3 = new NCMBQuery<NCMBObject> ("HighScore");
-		query3.WhereNotEqualTo ("Score" + 3, null);
-		query3.CountAsync ((int count3, NCMBException e) => {
-			if (e != null) {
-				//検索失敗時の処理
-			} else {
-				playernum[2]=count3;
-				getrank[5]=true;
-			}
-		});
-
-		//for文でやろうとしたが、iの更新がcountの取得よりも早く、count取得時にはi=4でArrayエラーが起こるためfor文を分解した
+		} 
+		else {
+			ownrank [stagenum - 1] = 0;
+			getownrank [stagenum - 1] = true;
+		}
 	}
 
+	void fetchplayernum(int stagenum){
 
+		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
+		query.WhereNotEqualTo ("Score" + stagenum, null);
+		query.CountAsync ((int count, NCMBException e) => {
+			if (e != null) {
+				//検索失敗時の処理
+			} else {
+				playernum [stagenum-1] = count;
+				getplayernum [stagenum-1] = true;
+			}
+		});
+	}
 
 	IEnumerator home(){
 		yield return new WaitForSeconds (0.3f);
