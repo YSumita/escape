@@ -15,17 +15,16 @@ public class startscenemanager : MonoBehaviour {
 	public Text NameText;
 
 	public GameObject BGMobj;
+	Animator animator;
+
 	// Use this for initialization
 	void Start () {
-
+		animator = nameenterbuttons.GetComponent<Animator> ();
 		if (PlayerPrefs.HasKey ("playername")) {
-			nameenterbuttons.SetActive(false);
 			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
-
 		}
 		else {
-			nameenterbuttons.SetActive(true);
-
+			animator.SetBool ("appear", true);
 		}
 	}
 	
@@ -52,11 +51,9 @@ public class startscenemanager : MonoBehaviour {
 		//名前ボックスの入力を取得。0文字かどうか判断
 		if (inputfield.text.Length > 0) {
 			PlayerPrefs.SetString ("playername", inputfield.text);
-			startscenebuttons.SetActive(true);
-			nameenterbuttons.SetActive(false);
 			Instantiate (buttonsound);
 			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
-
+			animator.SetBool ("appear", false);
 
 
 		}
@@ -68,7 +65,7 @@ public class startscenemanager : MonoBehaviour {
 
 	public void namereset(){
 		Instantiate (buttonsound);
-		nameenterbuttons.SetActive(true);
+		animator.SetBool ("appear", true);
 	}
 
 	IEnumerator play(){
