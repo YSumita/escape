@@ -14,9 +14,14 @@ public class gameoverscenemanager : MonoBehaviour {
 	float timer;
 	public GameObject buttonsound;
 	int stagenum;
+	Animator animator;
+	public GameObject highscoreannounce;
+	public GameObject highscoresound;
 
 	// Use this for initialization
 	void Start () {
+		highscoreannounce.SetActive(false);
+		animator = highscoreannounce.GetComponent<Animator> ();
 		stagenum = PlayerPrefs.GetInt ("stagenum");
 		mover = 0;
 		timer = -1f;
@@ -29,6 +34,11 @@ public class gameoverscenemanager : MonoBehaviour {
 				PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
 				HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
 				highScoreInstance.Save ();
+				highscoreannounce.SetActive (true);
+				animator.SetBool ("gethighscore", true);
+				Instantiate (highscoresound);
+
+
 				//NCMBの自分の欄を取得して、
 
 
@@ -39,6 +49,10 @@ public class gameoverscenemanager : MonoBehaviour {
 			PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
 			HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
 			highScoreInstance.Save ();
+			highscoreannounce.SetActive (true);
+			animator.SetBool ("gethighscore", true);
+			Instantiate (highscoresound);
+
 
 		}
 		lastscoretext.text = lastscore.ToString("f0");
@@ -79,6 +93,11 @@ public class gameoverscenemanager : MonoBehaviour {
 			push = false;
 			Instantiate (buttonsound);
 		}
+	}
+
+	public void pushokbutton(){
+		highscoreannounce.SetActive (false);
+		Instantiate(buttonsound);
 	}
 
 }
