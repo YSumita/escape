@@ -73,13 +73,6 @@ public class rankscenemanager : MonoBehaviour {
 				rankpref3.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList3 [i].name;
 				rankpref3.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList3 [i].highscore.ToString ();
 			}
-//			Debug.Log ("Highscore1:" + PlayerPrefs.GetFloat ("Highscore1"));
-//			Debug.Log ("Highscore2:" + PlayerPrefs.GetFloat ("Highscore2"));
-//			Debug.Log ("Highscore3:" + PlayerPrefs.GetFloat ("Highscore3"));
-//
-//			Debug.Log (ownrank [0]);
-//			Debug.Log (ownrank [1]);
-//			Debug.Log (ownrank [2]);
 
 			for (int i = 1; i < 4; i++) {
 				GameObject.Find ("yourRank" + i + "/numberofplayers").GetComponent<Text>().text = "/" + playernum [i - 1];
@@ -251,7 +244,7 @@ public class rankscenemanager : MonoBehaviour {
 			
 		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject> ("HighScore");
 		if (PlayerPrefs.HasKey ("highscore" + stagenum)) {
-			query.WhereGreaterThan ("Score" + stagenum, PlayerPrefs.GetFloat ("highscore" + stagenum));
+			query.WhereGreaterThan ("Score" + stagenum, PlayerPrefs.GetInt ("highscore" + stagenum));
 			query.CountAsync ((int count, NCMBException e) => {
 				if (e != null) {
 					//検索失敗時の処理

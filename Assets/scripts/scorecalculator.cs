@@ -23,7 +23,7 @@ public class scorecalculator : MonoBehaviour {
 		rednum = totaltilenum-groundswhite.Length;
 		redrate = rednum / totaltilenum;
 		score += Time.deltaTime * redrate*10;
-		scoretext.text = score.ToString ("f0");
+		scoretext.text = Mathf.FloorToInt(score).ToString ();
 	}
 
 	public float getredrate(){

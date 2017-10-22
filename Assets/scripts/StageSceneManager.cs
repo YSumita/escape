@@ -17,16 +17,16 @@ public class StageSceneManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		if (PlayerPrefs.GetFloat ("highscore1") < 300){
-			hardstagelock.text = Mathf.RoundToInt(PlayerPrefs.GetFloat ("highscore1")) + "/300";
+		if (PlayerPrefs.GetInt ("highscore1") < 300){
+			hardstagelock.text = PlayerPrefs.GetInt ("highscore1") + "/300";
 		}
 		else{
 		hardstage.SetActive(true);
 		hardstagefake.SetActive(false);
 		}
 
-		if (PlayerPrefs.GetFloat ("highscore2") < 500){
-			crazystagelock.text = Mathf.RoundToInt(PlayerPrefs.GetFloat ("highscore2")) + "/500";
+		if (PlayerPrefs.GetInt ("highscore2") < 500){
+			crazystagelock.text = PlayerPrefs.GetInt ("highscore2") + "/500";
 		}
 		else{
 			crazystage.SetActive(true);

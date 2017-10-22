@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class gameoverscenemanager : MonoBehaviour {
 	public Text lastscoretext;
 	public Text highscoretext;
-	float highscore;
-	float lastscore;
+	int highscore;
+	int lastscore;
 	bool push;
 	int mover;
 	float timer;
@@ -26,13 +26,13 @@ public class gameoverscenemanager : MonoBehaviour {
 		mover = 0;
 		timer = -1f;
 		push = true;
-		lastscore = PlayerPrefs.GetFloat ("lastscore");
+		lastscore = PlayerPrefs.GetInt("lastscore");
 		if (PlayerPrefs.HasKey ("highscore"+stagenum)) {
-			highscore = PlayerPrefs.GetFloat ("highscore"+stagenum);
+			highscore = PlayerPrefs.GetInt ("highscore"+stagenum);
 			if (highscore < lastscore) {
 				highscore = lastscore;
-				PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
-				HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
+				PlayerPrefs.SetInt ("highscore"+stagenum, highscore);
+				HighScore highScoreInstance = new HighScore (highscore, PlayerPrefs.GetString ("playername"),stagenum);
 				highScoreInstance.Save ();
 				highscoreannounce.SetActive (true);
 				animator.SetBool ("gethighscore", true);
@@ -46,8 +46,8 @@ public class gameoverscenemanager : MonoBehaviour {
 		}
 		else {
 			highscore = lastscore;
-			PlayerPrefs.SetFloat ("highscore"+stagenum, highscore);
-			HighScore highScoreInstance = new HighScore (Mathf.RoundToInt(highscore), PlayerPrefs.GetString ("playername"),stagenum);
+			PlayerPrefs.SetInt ("highscore"+stagenum, highscore);
+			HighScore highScoreInstance = new HighScore (highscore, PlayerPrefs.GetString ("playername"),stagenum);
 			highScoreInstance.Save ();
 			highscoreannounce.SetActive (true);
 			animator.SetBool ("gethighscore", true);
@@ -55,8 +55,8 @@ public class gameoverscenemanager : MonoBehaviour {
 
 
 		}
-		lastscoretext.text = lastscore.ToString("f0");
-		highscoretext.text = highscore.ToString("f0");
+		lastscoretext.text = lastscore.ToString();
+		highscoretext.text = highscore.ToString();
 	}
 	
 	// Update is called once per frame
