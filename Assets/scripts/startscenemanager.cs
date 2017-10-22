@@ -54,8 +54,11 @@ public class startscenemanager : MonoBehaviour {
 			Instantiate (buttonsound);
 			NameText.text = "Name: " + PlayerPrefs.GetString ("playername");
 			animator.SetBool ("appear", false);
-
-
+			if (!PlayerPrefs.HasKey ("highscore1")) {
+				PlayerPrefs.SetInt ("highscore", 0);
+			}
+			HighScore highScoreInstance = new HighScore (PlayerPrefs.GetInt("highscore1"), PlayerPrefs.GetString ("playername"),1);
+			highScoreInstance.Save ();
 		}
 
 		else {
