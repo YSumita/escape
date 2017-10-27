@@ -47,19 +47,32 @@ public class playercontroller : MonoBehaviour
 //		pos.z += speed * Time.deltaTime * CrossPlatformInputManager.GetAxisRaw ("Vertical");
 ////		this.transform.position = pos;
 
-		if (Input.GetKey ("up")) {
+		if (Input.GetKey ("up")&&Input.GetKey ("right")) {
+			this.transform.position += new Vector3 (speed * Time.deltaTime/Mathf.Sqrt(2), 0, speed * Time.deltaTime/Mathf.Sqrt(2));
+		}
+		else if (Input.GetKey ("up")&&Input.GetKey ("left")) {
+			this.transform.position += new Vector3 (-speed * Time.deltaTime/Mathf.Sqrt(2), 0, speed * Time.deltaTime/Mathf.Sqrt(2));
+		}
+		else if (Input.GetKey ("down")&&Input.GetKey ("right")) {
+			this.transform.position += new Vector3 (speed * Time.deltaTime/Mathf.Sqrt(2), 0, -speed * Time.deltaTime/Mathf.Sqrt(2));
+		}
+		else if (Input.GetKey ("down")&&Input.GetKey ("left")) {
+			this.transform.position += new Vector3 (-speed * Time.deltaTime/Mathf.Sqrt(2), 0, -speed * Time.deltaTime/Mathf.Sqrt(2));
+		}
+		else if (Input.GetKey ("up")) {
 			this.transform.position += new Vector3 (0, 0, speed * Time.deltaTime);
 		}
-		if (Input.GetKey ("down")) {
+		else if (Input.GetKey ("down")) {
 			this.transform.position -= new Vector3 (0, 0, speed * Time.deltaTime);
 		}
-		if (Input.GetKey ("right")) {
+		else if (Input.GetKey ("right")) {
 			this.transform.position += new Vector3 (speed * Time.deltaTime,0,0);
 		}
-		if (Input.GetKey ("left")) {
+		else if (Input.GetKey ("left")) {
 			this.transform.position -= new Vector3 (speed * Time.deltaTime,0,0);
 
 		}
+
 		if (this.transform.position.y < -5) {
 			PlayerPrefs.SetInt ("lastscore", Mathf.FloorToInt(refobj.GetComponent<scorecalculator> ().score));
 			SceneManager.LoadScene ("GameOverScene");
