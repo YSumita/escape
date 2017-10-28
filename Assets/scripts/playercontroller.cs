@@ -12,12 +12,13 @@ public class playercontroller : MonoBehaviour
 	GameObject refobj;
 	float movex;
 	float movez;
-
+	float root2 = Mathf.Sqrt (2);
+	Vector2 joymove;
 	// Use this for initialization
 	void Start ()
 	{
 		refobj = GameObject.Find ("gamemanager");
-		speed = 6.0f;
+		speed = 7.0f;
 	}
 	
 	// Update is called once per frame
@@ -26,38 +27,68 @@ public class playercontroller : MonoBehaviour
 		this.transform.Rotate (0, Time.deltaTime * 270, 0, Space.World);
 
 
-//		pos = this.transform.position;
-//		movex = CrossPlatformInputManager.GetAxisRaw ("Horizontal");
-//		movez = CrossPlatformInputManager.GetAxisRaw ("Vertical");
-//
-//		if (movez > movex) {
-//			if (movez > -movex) {
-//				pos.z += speed * Time.deltaTime;
-//			} else {
-//				pos.x -= speed * Time.deltaTime;
-//			}
-//		} else if (movez < movex) {
-//			if (movez > -movex) {
-//				pos.x += speed * Time.deltaTime;
-//			} else {
-//				pos.z -= speed * Time.deltaTime;
-//			}
-//		}
-//
-//		pos.z += speed * Time.deltaTime * CrossPlatformInputManager.GetAxisRaw ("Vertical");
-////		this.transform.position = pos;
+		pos = this.transform.position;
+		movex = CrossPlatformInputManager.GetAxisRaw ("Horizontal");
+		movez = CrossPlatformInputManager.GetAxisRaw ("Vertical");
+		joymove = new Vector2 (movex, movez);
+
+			//ジョイスティックの最低変位を決める
+			if (joymove.magnitude > 10 && joymove.magnitude < 50) {
+				if(movez > movex * (root2-1)){
+					if(movez > movex * (-1-root2)){
+						if(movez < movex * (root2+1)){
+							this.transform.position += new Vector3 (speed * Time.deltaTime/root2, 0, speed * Time.deltaTime/root2);
+						}
+						else{
+							this.transform.position += new Vector3 (0, 0, speed * Time.deltaTime);
+						}
+					}
+					else{
+						if(movez > movex * (1-root2)){
+							this.transform.position += new Vector3 (-speed * Time.deltaTime/root2, 0, speed * Time.deltaTime/root2);
+						}
+						else{
+							this.transform.position += new Vector3 (-speed * Time.deltaTime,0,0);
+						}
+					}
+				}
+
+				else{
+					if(movez > movex * (-root2-1)){
+						if(movez > movex * (1-root2)){
+							this.transform.position += new Vector3 (speed * Time.deltaTime,0,0);
+						}
+						else{
+							this.transform.position += new Vector3 (speed * Time.deltaTime/root2, 0, -speed * Time.deltaTime/root2);
+						}
+					}
+					else{
+						if(movez < movex * (root2+1)){
+							this.transform.position += new Vector3 (0, 0, -speed * Time.deltaTime);
+						}
+						else{
+							this.transform.position += new Vector3 (-speed * Time.deltaTime/root2, 0, -speed * Time.deltaTime/root2);
+						}
+					}
+				}
+			}
+
+
+
+
+
 
 		if (Input.GetKey ("up")&&Input.GetKey ("right")) {
-			this.transform.position += new Vector3 (speed * Time.deltaTime/Mathf.Sqrt(2), 0, speed * Time.deltaTime/Mathf.Sqrt(2));
+			this.transform.position += new Vector3 (speed * Time.deltaTime/root2, 0, speed * Time.deltaTime/root2);
 		}
 		else if (Input.GetKey ("up")&&Input.GetKey ("left")) {
-			this.transform.position += new Vector3 (-speed * Time.deltaTime/Mathf.Sqrt(2), 0, speed * Time.deltaTime/Mathf.Sqrt(2));
+			this.transform.position += new Vector3 (-speed * Time.deltaTime/root2, 0, speed * Time.deltaTime/root2);
 		}
 		else if (Input.GetKey ("down")&&Input.GetKey ("right")) {
-			this.transform.position += new Vector3 (speed * Time.deltaTime/Mathf.Sqrt(2), 0, -speed * Time.deltaTime/Mathf.Sqrt(2));
+			this.transform.position += new Vector3 (speed * Time.deltaTime/root2, 0, -speed * Time.deltaTime/root2);
 		}
 		else if (Input.GetKey ("down")&&Input.GetKey ("left")) {
-			this.transform.position += new Vector3 (-speed * Time.deltaTime/Mathf.Sqrt(2), 0, -speed * Time.deltaTime/Mathf.Sqrt(2));
+			this.transform.position += new Vector3 (-speed * Time.deltaTime/root2, 0, -speed * Time.deltaTime/root2);
 		}
 		else if (Input.GetKey ("up")) {
 			this.transform.position += new Vector3 (0, 0, speed * Time.deltaTime);

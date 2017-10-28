@@ -46,7 +46,7 @@ public class cubefallingcontroller : MonoBehaviour {
 				foreach (GameObject obj in fallinggrounds) {
 					obj.tag = "groundfall";
 				}
-				audiosource.PlayOneShot (fallingsound);
+//				audiosource.PlayOneShot (fallingsound);
 				one = false;
 			}
 			ypos=-Mathf.Pow(timer - 30,2)*3;
