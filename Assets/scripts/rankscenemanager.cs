@@ -59,49 +59,49 @@ public class rankscenemanager : MonoBehaviour {
 		if (getrank[0]&&getrank[1]&&getrank[2]&&getownrank[0]&&getownrank[1]&&getownrank[2]&&getplayernum[0]&&getplayernum[1]&&getplayernum[2]) {
 			for (int i = 0; i < topRankersList1.Count; i++) {
 				rankpref1 = GameObject.Find ("Rank1/Viewport/Content/Rank (" + (i + 1) + ")");
-				rankpref1.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList1 [i].name;
-				rankpref1.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList1 [i].highscore.ToString ();
+				rankpref1.transform.Find ("RankName").GetComponent<Text> ().text = topRankersList1 [i].name;
+				rankpref1.transform.Find ("RankScore").GetComponent<Text> ().text = topRankersList1 [i].highscore.ToString ();
 				if (i == 0) {
-					rankpref1.transform.FindChild ("RankNum").GetComponent<Text> ().text = "1";
+					rankpref1.transform.Find ("RankNum").GetComponent<Text> ().text = "1";
 				} 
 				else {
 					if (topRankersList1 [i].highscore == topRankersList1 [i - 1].highscore) {
-						rankpref1.transform.FindChild ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank1/Viewport/Content/Rank (" + i + ")").transform.FindChild ("RankNum").GetComponent<Text> ().text;
+						rankpref1.transform.Find ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank1/Viewport/Content/Rank (" + i + ")").transform.Find ("RankNum").GetComponent<Text> ().text;
 					} 
 					else {
-						rankpref1.transform.FindChild ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
+						rankpref1.transform.Find ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
 					}
 				}
 			}
 			for (int i = 0; i < topRankersList2.Count; i++) {
 				rankpref2 = GameObject.Find ("Rank2/Viewport/Content/Rank (" + (i + 1) + ")");
-				rankpref2.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList2 [i].name;
-				rankpref2.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList2 [i].highscore.ToString ();
+				rankpref2.transform.Find ("RankName").GetComponent<Text> ().text = topRankersList2 [i].name;
+				rankpref2.transform.Find ("RankScore").GetComponent<Text> ().text = topRankersList2 [i].highscore.ToString ();
 				if (i == 0) {
-					rankpref2.transform.FindChild ("RankNum").GetComponent<Text> ().text = "1";
+					rankpref2.transform.Find ("RankNum").GetComponent<Text> ().text = "1";
 				} 
 				else {
 					if (topRankersList2 [i].highscore == topRankersList2 [i - 1].highscore) {
-						rankpref2.transform.FindChild ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank2/Viewport/Content/Rank (" + i + ")").transform.FindChild ("RankNum").GetComponent<Text> ().text;
+						rankpref2.transform.Find ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank2/Viewport/Content/Rank (" + i + ")").transform.Find ("RankNum").GetComponent<Text> ().text;
 					} 
 					else {
-						rankpref2.transform.FindChild ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
+						rankpref2.transform.Find ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
 					}
 				}
 			}
 			for (int i = 0; i < topRankersList3.Count; i++) {
 				rankpref3 = GameObject.Find ("Rank3/Viewport/Content/Rank (" + (i + 1) + ")");
-				rankpref3.transform.FindChild ("RankName").GetComponent<Text> ().text = topRankersList3 [i].name;
-				rankpref3.transform.FindChild ("RankScore").GetComponent<Text> ().text = topRankersList3 [i].highscore.ToString ();
+				rankpref3.transform.Find ("RankName").GetComponent<Text> ().text = topRankersList3 [i].name;
+				rankpref3.transform.Find ("RankScore").GetComponent<Text> ().text = topRankersList3 [i].highscore.ToString ();
 				if (i == 0) {
-					rankpref3.transform.FindChild ("RankNum").GetComponent<Text> ().text = "1";
+					rankpref3.transform.Find ("RankNum").GetComponent<Text> ().text = "1";
 				} 
 				else {
 					if (topRankersList3 [i].highscore == topRankersList3 [i - 1].highscore) {
-						rankpref3.transform.FindChild ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank3/Viewport/Content/Rank (" + i + ")").transform.FindChild ("RankNum").GetComponent<Text> ().text;
+						rankpref3.transform.Find ("RankNum").GetComponent<Text> ().text = GameObject.Find ("Rank3/Viewport/Content/Rank (" + i + ")").transform.Find ("RankNum").GetComponent<Text> ().text;
 					} 
 					else {
-						rankpref3.transform.FindChild ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
+						rankpref3.transform.Find ("RankNum").GetComponent<Text> ().text = (i + 1).ToString ();
 					}
 				}
 			}
